@@ -36,6 +36,8 @@ int State::evaluate(){
         case 5:
           currval=20;
           break;
+        case 6:
+          currval=2000;
         default:
           break;
         }

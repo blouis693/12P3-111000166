@@ -59,7 +59,6 @@ int kingpos[6][5] = {
         { 0,  0,  0,  -50,  -50 },
         { 0,  0,  0,  0,  0 }
 };
-//int wow=0;
 int playertemp;
 int alphabeta::evalstate(State *state){
   int whitevalue=0;
@@ -112,7 +111,7 @@ Move alphabeta::get_move(State *state, int depth){
    // int val=makechild(state,depth,0);
     depth=8;
  //   std::cout << "Depth: " << depth << std::endl;
-  // std::cout << "PLAYER "<< state->player << std::endl;
+   std::cout << "PLAYER "<< state->player << std::endl;
     playertemp=state->player;
     makechild(state,depth,state->player,-10000000,10000000);
     std::cout << "STATE VALUE: "<<state->statevalue << std::endl;
@@ -130,7 +129,7 @@ int alphabeta::makechild(State *state, int depth, int player,int alpha,int beta)
 
     if(state->game_state==WIN){
       //  std::cout << "KALAH COKK" << std::endl;
-       return player==0 ? 100000000:-100000000;
+        return player==0 ? 10000000:-10000000;
     }
      if (depth == 0){
         int eval=alphabeta::evalstate(state);
