@@ -11,9 +11,45 @@
  * 
  * @return int 
  */
+
 int State::evaluate(){
-  // [TODO] design your own evaluation function
-  return 0;
+  int whitevalue=0;
+  int blackvalue=0;
+  for(int i=0;i<2;i++){
+    for(int j=0;j<BOARD_H;j++ ){
+      for(int k=0;k<BOARD_W;k++){
+        int currval=0;
+        switch (this->board.board[i][j][k])
+        {
+        case 1:
+          currval=2;
+          break;
+        case 2:
+          currval=6;
+          break;
+        case 3:
+          currval=7;
+          break;
+        case 4:
+          currval=8;
+          break;
+        case 5:
+          currval=20;
+          break;
+        default:
+          break;
+        }
+        if(i==0){
+          whitevalue+=currval;
+        }
+        else blackvalue+=currval;
+      }
+    }
+    
+  }
+  statevalue= whitevalue-blackvalue;
+  return statevalue;
+  
 }
 
 
@@ -26,7 +62,7 @@ int State::evaluate(){
 State* State::next_state(Move move){
   Board next = this->board;
   Point from = move.first, to = move.second;
-  
+
   int8_t moved = next.board[this->player][from.first][from.second];
   //promotion for pawn
   if(moved == 1 && (to.first==BOARD_H-1 || to.first==0)){
@@ -40,7 +76,7 @@ State* State::next_state(Move move){
   next.board[this->player][to.first][to.second] = moved;
   
   State* next_state = new State(next, 1-this->player);
-  
+  next_state->curr=move;
   if(this->game_state != WIN)
     next_state->get_legal_actions();
   return next_state;
@@ -207,7 +243,7 @@ void State::get_legal_actions(){
       }
     }
   }
-  std::cout << "\n";
+  //std::cout << "\n";
   this->legal_actions = all_actions;
 }
 

@@ -255,7 +255,7 @@ void State::get_legal_actions(){
       }
     }
   }
-  std::cout << "\n";
+  //std::cout << "\n";
   this->legal_actions = all_actions;
 }
 
@@ -374,6 +374,7 @@ void launch_executable(std::string filename) {
   // May require installing the command by:
   // brew install coreutils
   std::string command = "gtimeout " + std::to_string(timeout) + "s " + filename + " " + file_state + " " + file_action;
+  //std::cout << command << std::endl;
   system(command.c_str());
 #endif
 }
@@ -390,6 +391,7 @@ bool valid_move(Move move, std::vector<Move>& legal_moves){
     if(mv==move){
       return true;
     }
+    
   }
   return false;
 }
@@ -415,17 +417,18 @@ int main(int argc, char** argv) {
     // std::cout << "test\n";
     // Output current state
     std::cout << step << " step" << std::endl;
-    log << step << " step" << std::endl;
+
     data = game.encode_output();
     std::cout << data << std::endl;
     log << data << std::endl;
-    
     data = game.encode_state();
     std::ofstream fout(file_state);
     fout << data;
-    fout.close();
+    fout.close();        log << step << " step" << std::endl;   
+
+
     // Run external program
-    launch_executable(player_filename[game.player+1]);
+    launch_executable(player_filename[game.player+1]); //std::cout << "tesdds" << std::endl;
     // Read action
     std::ifstream fin(file_action);
     Move action(Point(-1, -1), Point(-1, -1));
@@ -450,7 +453,7 @@ int main(int argc, char** argv) {
     fin.close();
 
     if (remove(file_action.c_str()) != 0)
-      std::cerr << "Error removing file: " << file_action << "\n";
+      std::cerr << "Error removing fileee: " << file_action << "\n";
     // Take action
     if (!valid_move(action, game.legal_actions)){
       // If action is invalid.
@@ -463,6 +466,22 @@ int main(int argc, char** argv) {
       log << x_axis[action.first.second] << y_axis[action.first.first] << " → " \
           << x_axis[action.second.second] << y_axis[action.second.first] << "\n";
       log << data;
+      int white_material = 0;
+      int black_material = 0;
+      int piece;
+      
+      for(size_t i=0; i<BOARD_H; i+=1){
+        for(size_t j=0; j<BOARD_W; j+=1){
+          if((piece=game.board.board[0][i][j])){
+            white_material += material_table[piece];
+          }
+          if((piece=game.board.board[1][i][j])){
+            black_material += material_table[piece];
+          }
+        }
+      }
+      std::cout << "white: " << white_material << std::endl;
+      std::cout << "black " << black_material << std::endl;
       break;
     }else{
       temp = game.next_state(action);
@@ -491,6 +510,8 @@ int main(int argc, char** argv) {
           }
         }
       }
+      std::cout << "white: " << white_material << std::endl;
+      std::cout << "black " << black_material << std::endl;
       if(white_material<black_material){
         game.player = 1;
         game.game_state = WIN;

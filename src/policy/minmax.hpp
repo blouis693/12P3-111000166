@@ -6,8 +6,9 @@
  * @brief Policy class for random policy, 
  * your policy class should have get_move method
  */
-class Random{
+class minmax{
 public:
   static Move get_move(State *state, int depth);
-  //static int evaluate(bool whitepiece);
+  static int makechild(State* state,int depth,int player);
+ // State* evaluatetree(State* state,int depth);
 };

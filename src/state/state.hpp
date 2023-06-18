@@ -46,12 +46,23 @@ class State{
     GameState game_state = UNKNOWN;
     Board board;
     int player = 0;
+    int statevalue;
+    State* subtree=NULL;
     std::vector<Move> legal_actions;
-    
+    std::vector<State*> child;
+    Move ret;//ma
+    int score=-1000000000;//ma
+    Move curr;
     State(){};
-    State(int player): player(player){};
-    State(Board board): board(board){};
-    State(Board board, int player): board(board), player(player){};
+    State(int player): player(player){
+
+    };
+    State(Board board): board(board){
+
+    };
+    State(Board board, int player): board(board), player(player){
+
+    };
     
     int evaluate();
     State* next_state(Move move);
