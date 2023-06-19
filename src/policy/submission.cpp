@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "../state/state.hpp"
-#include "./alphabeta.hpp"
+#include "./submission.hpp"
 
 /**
  * @brief Randomly get a legal action
@@ -59,8 +59,8 @@ int kingpos[6][5] = {
         { 0,  0,  0,  -50,  -50 },
         { 0,  0,  0,  0,  0 }
 };
-int playertemp;
-int alphabeta::evalstate(State *state){
+int playertempp;
+int submission::evalstate(State *state){
   int whitevalue=0;
   int blackvalue=0;
 
@@ -109,36 +109,36 @@ int alphabeta::evalstate(State *state){
   return state->statevalue;
   
 }
-Move alphabeta::get_move(State *state, int depth){
+Move submission::get_move(State *state, int depth){
   if(!state->legal_actions.size())
     state->get_legal_actions();
    // int val=makechild(state,depth,0);
    // depth=8;
  //   std::cout << "Depth: " << depth << std::endl;
    std::cout << "PLAYER "<< state->player << std::endl;
-    playertemp=state->player;
+    playertempp=state->player;
     makechild(state,depth,state->player,-10000000,10000000);
     std::cout << "STATE VALUE: "<<state->statevalue << std::endl;
    // std::cout<<"WOW: " << wow << std::endl;
     return state->subtree->curr;
 }
 
-int alphabeta::makechild(State *state, int depth, int player,int alpha,int beta) {
+int submission::makechild(State *state, int depth, int player,int alpha,int beta) {
     //std::cout << "ASMDFSDF" << std::endl;
    // wow++;
    
     if (state->legal_actions.size()<=0)
         state->get_legal_actions();
-    if (state->legal_actions.size() == 0) return alphabeta::evalstate(state);
+    if (state->legal_actions.size() == 0) return submission::evalstate(state);
 
     if(state->game_state==WIN){
       //  std::cout << "KALAH COKK" << std::endl;
-        if(playertemp!=player)
+        if(playertempp!=player)
         return player==0 ? 10000000:-10000000;
 
     }
      if (depth == 0){
-        int eval=alphabeta::evalstate(state);
+        int eval=submission::evalstate(state);
          return eval;
     }
     if (player == 0) {
