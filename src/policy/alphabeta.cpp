@@ -11,54 +11,7 @@
  * @return Move 
  * 
  */
-int queenpos[6][5] = {
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 }
-};
-int horsepos[6][5] = {
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 3,  0,  100000,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 }
-};
-int pawnspos[6][5] = {
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  5,  0,  0 },
-        { 0,  5,  10,  0,  10 },
-        { 0,  0,  0,  5,  0 },
-        { 0,  0,  0,  0,  0 }
-};
-int pos[6][5] = {
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 }
-};
-int bispos[6][5] = {
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  10,  0,  10,  0 },
-        { 0,  0,  0,  0,  0 }
-};
-int kingpos[6][5] = {
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  -50,  -50 },
-        { 0,  0,  0,  -50,  -50 },
-        { 0,  0,  0,  0,  0 }
-};
+
 int playertemp;
 int alphabeta::evalstate(State *state){
   int whitevalue=0;
@@ -133,9 +86,9 @@ int alphabeta::makechild(State *state, int depth, int player,int alpha,int beta)
 
     if(state->game_state==WIN){
       //  std::cout << "KALAH COKK" << std::endl;
-        if(playertemp!=player)
+      if(playertemp!=player)
         return player==0 ? 10000000:-10000000;
-
+        //else if(playertemp==player)return player==0 ? -50 : 50;
     }
      if (depth == 0){
         int eval=alphabeta::evalstate(state);

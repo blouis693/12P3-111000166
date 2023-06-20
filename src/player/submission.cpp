@@ -40,8 +40,8 @@ void read_board(std::ifstream& fin) {
 void write_valid_spot(std::ofstream& fout) {
   // Keep updating the output until getting killed.
   while(true) {
-    // Choose a random spot.
-    auto move = submission::get_move(root, 6);
+    int depth=root->player==0?6:7;
+    auto move = submission::get_move(root, depth);
     fout << move.first.first << " " << move.first.second << " "\
          << move.second.first << " " << move.second.second << std::endl;
     
