@@ -16,23 +16,23 @@ int queenpos[6][5] = {
         { 0,  0,  0,  0,  0 },
         { 0,  0,  0,  0,  0 },
         { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 }
+        { 10,  0,  0,  10,  10 },
+        { 0,  0,  0,  -5,  0 }
 };
 int horsepos[6][5] = {
         { 0,  0,  0,  0,  0 },
         { 0,  0,  0,  0,  0 },
         { 0,  0,  0,  0,  0 },
-        { 3,  0,  100000,  0,  0 },
+        { 3,  0,  10,  0,  0 },
         { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 }
+        { 0,  -10,  0,  0,  0 }
 };
 int pawnspos[6][5] = {
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  0,  5,  0,  0 },
-        { 0,  5,  10,  0,  10 },
-        { 0,  0,  0,  5,  0 },
+        { 10,  10,  10,  10,  10 },
+        { 5,  5,  5,  5,  5 },
+        { 3,  3,  3,  3,  3 },
+        { 2,  2,  2,  2, 2 },
+        { -5,  -5,  -5,  -5,  -5 },
         { 0,  0,  0,  0,  0 }
 };
 int pos[6][5] = {
@@ -47,9 +47,9 @@ int bispos[6][5] = {
         { 0,  0,  0,  0,  0 },
         { 0,  0,  0,  0,  0 },
         { 0,  0,  0,  0,  0 },
-        { 0,  0,  0,  0,  0 },
-        { 0,  10,  0,  10,  0 },
-        { 0,  0,  0,  0,  0 }
+        { 0,  0,  0,  0,  5},
+        { 0,  0,  0,  5,  0 },
+        { 0,  0,  0,  -2,  0 }
 };
 int kingpos[6][5] = {
         { 0,  0,  0,  0,  0 },
@@ -73,7 +73,7 @@ int submission::evalstate(State *state){
         case 1:
         // std::cout << "halo" << std::endl;
           currval=2;
-          //currval+=pawnspos[j][k];
+         // currval+=pawnspos[j][k];
           break;
         case 2:
           currval=6;
@@ -84,11 +84,11 @@ int submission::evalstate(State *state){
           break;
         case 4:
           currval=8;
-         // currval+=bispos[j][k];
+         //currval+=bispos[j][k];
           break;
         case 5:
           currval=20;
-         // currval+=queenpos[j][k];
+       // currval+=queenpos[j][k];
           break;
         case 6:
       // if(playertemp==0)
@@ -135,6 +135,7 @@ int submission::makechild(State *state, int depth, int player,int alpha,int beta
       //  std::cout << "KALAH COKK" << std::endl;
         if(playertempp!=player)
         return player==0 ? 10000000:-10000000;
+        //else return -1;
 
     }
      if (depth == 0){
@@ -148,6 +149,7 @@ int submission::makechild(State *state, int depth, int player,int alpha,int beta
             State* tmp = state->next_state(i);
             tmp->player=1;
             int val = makechild(tmp, depth - 1, 1,alpha,beta);
+           // if(val==-1)val=(max*2)/2;
             if (val > max){ 
                // std::cout << "val: "<< val  << " depth: "<< depth  << " player: " << player<< std::endl;
                 if(state->subtree)delete state->subtree;
@@ -178,6 +180,7 @@ int submission::makechild(State *state, int depth, int player,int alpha,int beta
             State* tmp = state->next_state(i);
             tmp->player=0;
             int val = makechild(tmp, depth - 1, 0,alpha,beta);
+           // if(val==-1)val=min/2;
             if (val < min) {
             //   std::cout << "val: "<< val  << " depth: "<< depth  << " player: " << player<< std::endl;
                 if(state->subtree)delete state->subtree;
